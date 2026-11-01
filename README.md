@@ -1,33 +1,63 @@
 # NEXORA — Objects for What's Next
 
-A minimal luxury e-commerce experience crafted with **React 19**, **Vite**, **Tailwind CSS v4**, **GSAP**, and **Framer Motion**. Designed with an editorial aesthetic inspired by contemporary industrial design, warm tactile materials, and Scandinavian architectural minimalism.
+> A minimal luxury e-commerce frontend built for the modern web — editorial in spirit, performant by design.
+
+Crafted with **React 19**, **Vite 8**, **Tailwind CSS v4**, **GSAP 3**, and **Framer Motion 14**. The design language draws from Scandinavian architectural minimalism and warm tactile materiality, expressed through the *Oat Milk & Burnt Sienna* palette.
 
 ---
 
-## 🌟 Key Highlights
+## ✨ Feature Overview
 
-- **Editorial Studio Aesthetic**: Built on the *Oat Milk & Burnt Sienna* design system with warm taupe undertones, glassmorphic floating elements, and custom typography (`Space Grotesk` & `Manrope`).
-- **Cinematic Motion & Animations**: GSAP 3 with ScrollTrigger reveals, dynamic hero timeline animations, and Framer Motion layout transitions—with full `prefers-reduced-motion` accessibility support.
-- **Spotlight Search Overlay**: Keyboard-first modal search (`↑`, `↓`, `Enter`, `Esc`) with debounced querying, instant previews, and direct product routing.
-- **Client-Side Authentication**: Complete Login and Signup flow with live password strength indicator, 1-click demo credential autofill, and persistent session state.
-- **Dual Shopping Flow**: Instant flyout slide-in Cart Drawer for rapid bag access alongside dedicated `/cart` and `/checkout` pages with order simulation.
-- **App-Style Mobile Navigation**: Tactile off-canvas drawer designed like modern retail apps, featuring quick search, 2×2 visual category grid, utility dock, and user profile card.
-- **Global Theme Engine**: Floating action button (FAB) toggle between Oat Milk (Light) and Deep Espresso (Dark) with zero Flash of Unstyled Content (Anti-FOUC).
-- **Responsive Architecture**: Engineered for seamless ergonomics across all viewports—from 360px compact mobile screens to ultra-wide desktop displays.
+### 🎬 Motion & Visual Design
+- **Cinematic Hero** — GSAP timeline entrance with auto-rotating editorial product showcase (4.5s interval), glassmorphic floating metadata pills, parallax scroll, and a live scroll indicator.
+- **GSAP ScrollTrigger Reveals** — Section-level stagger animations on `FeaturedCollection`, `CategoriesSection`, `ProductStory`, `TrendingSection`, and `NewsletterSection`.
+- **Framer Motion Page Transitions** — Smooth `AnimatePresence`-driven fade/slide between all routes, with lazy-loaded pages for fast TTI.
+- **Animated Toast Notifications** — Spring-physics stack (max 3) with success, error, and info variants — auto-dismisses after 3.5s.
+- **Reduced Motion Support** — All GSAP and Framer Motion animations respect `prefers-reduced-motion` via `useReducedMotion` hook.
+
+### 🔍 Search
+- **Spotlight Search Overlay** — Full-screen modal with debounced live querying (400ms), animated skeleton loading rows, and popular category shortcuts when idle.
+- **Keyboard Navigation** — `↑` / `↓` to move between results, `Enter` to navigate, `Esc` to dismiss. Full focus trap with `aria-live` announcements.
+
+### 🛍 Shopping & Commerce
+- **Product Catalogue (`/shop`)** — Debounced search, category discipline pills (8 curated), slide-out luxury filter drawer (category, price range, rating), active filter tags, sort controls, and paginated "Load More" flow using `useProducts` hook with AbortController-based request cancellation.
+- **Product Details (`/product/:id`)** — Multi-image gallery with thumbnail strip, fractional star ratings, stock indicator, quantity stepper (capped at 99), related products grid, and breadcrumb navigation.
+- **Instant Cart Drawer** — Spring-physics slide-in panel from the right, full quantity controls (increment, decrement, remove), subtotal, and direct checkout CTA — without leaving the current page.
+- **Dedicated Cart Page (`/cart`)** — Full cart review with free shipping progress bar (threshold: \$150), promo code input (try `NEXORA10`), tax calculation (8%), item-level edit, and order summary.
+- **Checkout Simulation (`/checkout`)** — Contact, shipping address, and payment form with field validation. Demo mode — no real payment gateway. Clears cart and shows confirmation on submit.
+
+### ❤️ Wishlist
+- **Wishlist (`/wishlist`)** — Saves items via `WishlistContext` with localStorage persistence. One-click "Add All to Cart" transfers every saved item. Responsive 2-column grid on mobile.
+- **Wishlist Heart Button** — Appears on every `ProductCard` and on the `ProductDetailsPage` with animated scale feedback.
+
+### 🔐 Authentication
+- **Login (`/login`)** — Email + password validation, 1-click demo credential autofill (`alexandra.vance@nexora.luxury` / `ArchivalPass2026!`), show/hide password toggle, and session persistence via `localStorage`.
+- **Signup (`/signup`)** — Name, email, password, confirm password fields with live password strength meter (Weak / Good / Strong), and terms agreement toggle.
+- Both pages redirect to `/shop` after authentication. If already signed in, the Login page shows a session card with sign-out option.
+
+### 🗺 Navigation
+- **Navbar** — Fixed header with transparent-to-blurred-glass scroll transition (threshold: 15px). Responsive height: `64px` desktop → `60px` tablet → `58px` mobile. Shows live cart and wishlist badge counts. Auth-aware user icon (routes to profile or login).
+- **App-Style Mobile Drawer** — Framer Motion spring slide-in from the right. Contains: quick search shortcut → `SearchOverlay`, 2×2 visual category cards (Furniture, Watches, Fragrances, Home), 3-column utility dock (Bag, Wishlist, Checkout), and an account profile card with sign-out.
+- **Collections (`/collections`)** — Thematic editorial lookbook with 6 curated capsule collections (Architectural Living, Nocturne Fragrances, Horology, and more), live product image previews from the API, GSAP stagger entrance, and discipline filter tabs.
+- **Global Floating Theme FAB** — Fixed `bottom-right` circular button, toggling Light (Oat Milk) ↔ Dark (Deep Espresso) with animated sun/moon icon rotation, backdrop blur, and `data-theme` attribute flipped on `<html>`. Anti-FOUC theme bootstrapper runs before React via `public/theme-init.js`.
 
 ---
 
 ## 🛠 Tech Stack
 
-| Layer | Technology | Purpose |
+| Layer | Library / Tool | Version |
 |---|---|---|
-| **Framework** | [React 19](https://react.dev/) + [Vite](https://vitejs.dev/) | Component architecture, Fast Refresh & modern bundling |
-| **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) + CSS Variables | CSS-first token system, smooth theme switching |
-| **Animation** | [GSAP](https://gsap.com/) (ScrollTrigger) & [Framer Motion](https://motion.dev/) | Studio-grade choreography & page transitions |
-| **Routing** | [React Router v7](https://reactrouter.com/) | Declarative client-side routing & deep-linking |
-| **Icons** | [Lucide React](https://lucide.dev/) | Clean, consistent vector iconography |
-| **API** | [DummyJSON Products API](https://dummyjson.com/) | Dynamic catalog, search, categories, and inventory data |
-| **State** | React Context + Web Storage | Persistent auth, bag, wishlist, and theme preferences |
+| Framework | React | `^19.3.1` |
+| Build Tool | Vite | `^8.3.4` |
+| Styling | Tailwind CSS (CSS-first, no config file) | `^4.3.3` |
+| Animation | GSAP + ScrollTrigger + `@gsap/react` | `^3.15.0` / `^2.1.2` |
+| Animation | Framer Motion | `^14.6.0` |
+| Routing | React Router DOM | `^7.18.4` |
+| Icons | Lucide React | `^1.61.0` |
+| Data API | [DummyJSON](https://dummyjson.com/docs/products) | — |
+| State | React Context API + `useReducer` | built-in |
+| Persistence | `localStorage` | browser built-in |
+| Fonts | Space Grotesk, Manrope | Google Fonts |
 
 ---
 
@@ -35,45 +65,98 @@ A minimal luxury e-commerce experience crafted with **React 19**, **Vite**, **Ta
 
 ```
 nexora/
-├── public/                 # Static assets, SVG branding, anti-FOUC theme bootstrapper
+├── public/
+│   ├── favicon.svg            # SVG brand mark
+│   └── theme-init.js          # Anti-FOUC theme bootstrapper (runs before React)
 ├── src/
 │   ├── components/
-│   │   ├── animations/     # Page transitions & GSAP scroll reveal wrappers
-│   │   ├── cart/           # Instant flyout cart drawer & item cards
-│   │   ├── home/           # Hero, curated collections, product stories, categories, newsletter
-│   │   ├── layout/         # Dynamic navbar, app-style mobile menu, footer, floating theme FAB
-│   │   ├── products/       # Product cards, gallery, skeleton loaders, sorting controls
-│   │   ├── search/         # Keyboard-driven search spotlight modal
-│   │   ├── ui/             # Buttons, icons, animated toast notifications, empty states
-│   │   └── wishlist/       # Quick wishlist toggle button
-│   ├── context/            # AuthContext, CartContext, WishlistContext, ThemeContext
-│   ├── hooks/              # useProducts, useDebounce, useReducedMotion
-│   ├── pages/              # Home, Shop, Collections, Details, Cart, Checkout, Auth, 404
-│   ├── services/           # DummyJSON API communication layer
-│   ├── utils/              # Currency formatting and helpers
-│   ├── App.jsx             # Route definitions & global providers
-│   ├── index.css           # Design tokens, themes, typography, and utility classes
-│   └── main.jsx            # Application entry point
-├── vercel.json             # Vercel deployment SPA rewrite configuration
-└── vite.config.js          # Vite build tooling and Tailwind CSS plugin setup
+│   │   ├── animations/
+│   │   │   ├── AnimatedSection.jsx   # GSAP ScrollTrigger scroll-reveal wrapper
+│   │   │   └── PageTransition.jsx    # Framer Motion page fade/slide wrapper
+│   │   ├── cart/
+│   │   │   └── CartDrawer.jsx        # Spring slide-in cart overlay with quantity controls
+│   │   ├── home/
+│   │   │   ├── HeroSection.jsx       # Cinematic hero with GSAP timeline, auto-carousel
+│   │   │   ├── FeaturedCollection.jsx # 4-product curated spotlight with stagger animation
+│   │   │   ├── ProductStory.jsx      # Asymmetric editorial monograph with clip-path reveal
+│   │   │   ├── CategoriesSection.jsx # API-powered category grid (2-col mobile, 4-col desktop)
+│   │   │   ├── TrendingSection.jsx   # Trending product grid
+│   │   │   └── NewsletterSection.jsx # Invitation form with promo code copy on success
+│   │   ├── layout/
+│   │   │   ├── Navbar.jsx            # Scroll-aware fixed header with auth/cart/search
+│   │   │   ├── MobileMenu.jsx        # App-style spring drawer with category cards & dock
+│   │   │   ├── Footer.jsx            # 3-column minimal footer with back-to-top
+│   │   │   ├── ThemeToggle.jsx       # Floating FAB or inline sun/moon theme button
+│   │   │   └── ScrollToTop.jsx       # Scroll restoration on route change
+│   │   ├── products/
+│   │   │   ├── ProductCard.jsx       # Card with rating stars, discount badge, wishlist heart
+│   │   │   ├── ProductGallery.jsx    # Thumbnail strip + main image viewer
+│   │   │   ├── ProductGrid.jsx       # Responsive auto-fill product grid
+│   │   │   ├── ProductSkeleton.jsx   # Shimmer loading skeleton card
+│   │   │   └── ProductSort.jsx       # Sort dropdown component
+│   │   ├── search/
+│   │   │   └── SearchOverlay.jsx     # Full-screen search modal with keyboard navigation
+│   │   ├── ui/
+│   │   │   ├── Button.jsx            # Polymorphic button (variant/size/loading/as-Link)
+│   │   │   ├── IconButton.jsx        # Icon button with optional badge overlay
+│   │   │   ├── Toast.jsx             # Animated toast stack + ToastProvider + useToast hook
+│   │   │   ├── EmptyState.jsx        # Reusable empty state (icon + title + CTA)
+│   │   │   └── index.js              # Barrel export
+│   │   └── wishlist/
+│   │       └── WishlistButton.jsx    # Animated heart toggle button
+│   ├── context/
+│   │   ├── AuthContext.jsx           # Login, signup, logout; localStorage session persistence
+│   │   ├── CartContext.jsx           # Cart reducer (add/remove/update/clear); localStorage
+│   │   ├── WishlistContext.jsx       # Wishlist toggle/add/remove; localStorage
+│   │   ├── ThemeContext.jsx          # Light/dark toggle; system preference detection
+│   │   └── index.js                 # Barrel export
+│   ├── hooks/
+│   │   ├── useProducts.js            # Paginated, filterable, searchable product fetcher
+│   │   ├── useDebounce.js            # 400ms value debounce for search
+│   │   ├── useReducedMotion.js       # Reads prefers-reduced-motion media query
+│   │   └── index.js                 # Barrel export
+│   ├── pages/
+│   │   ├── HomePage.jsx              # All homepage sections composed
+│   │   ├── ShopPage.jsx              # Catalogue with filters, search, sort, pagination
+│   │   ├── CollectionsPage.jsx       # Editorial capsule lookbook with GSAP animations
+│   │   ├── ProductDetailsPage.jsx    # Gallery, specs, add-to-bag, related products
+│   │   ├── WishlistPage.jsx          # Saved items grid with batch cart transfer
+│   │   ├── CartPage.jsx              # Full bag review, promo codes, order summary
+│   │   ├── CheckoutPage.jsx          # Multi-section demo checkout form
+│   │   ├── LoginPage.jsx             # Auth with demo autofill + remember me
+│   │   ├── SignupPage.jsx            # Registration with password strength meter
+│   │   └── NotFoundPage.jsx          # Custom 404 page
+│   ├── services/
+│   │   └── productService.js         # All DummyJSON API calls + normalizeProduct
+│   ├── utils/
+│   │   ├── formatPrice.js            # USD currency formatter
+│   │   └── index.js                 # Barrel export
+│   ├── App.jsx                       # Route definitions, global providers, lazy loading
+│   ├── App.css                       # Minimal reset overrides
+│   ├── index.css                     # Design tokens, themes, typography, utility classes
+│   └── main.jsx                      # React DOM entry point
+├── vercel.json                        # SPA rewrite: all routes → /index.html
+├── vite.config.js                     # Vite config with @tailwindcss/vite plugin
+├── eslint.config.js                   # ESLint flat config
+└── package.json
 ```
 
 ---
 
 ## 🧭 Routes & Pages
 
-| Route | View | Description |
+| Route | Page | Description |
 |---|---|---|
-| `/` | `HomePage` | Cinematic editorial showcase, interactive hero, category cards, and newsletter |
-| `/shop` | `ShopPage` | Filterable catalogue with category pills, price sorting, search, and pagination |
-| `/collections` | `CollectionsPage` | Curated archival collections and seasonal design drops |
-| `/product/:id` | `ProductDetailsPage` | High-res gallery preview, specifications, stock indicator, and related objects |
-| `/cart` | `CartPage` | Dedicated bag review, quantity controls, promo discounts, and order summary |
-| `/checkout` | `CheckoutPage` | Streamlined checkout simulation with contact, shipping, and validation |
-| `/wishlist` | `WishlistPage` | Saved objects gallery with one-click "Move to Bag" functionality |
-| `/login` | `LoginPage` | User sign-in with 1-click demo credentials autofill |
-| `/signup` | `SignupPage` | Account registration with real-time password security analysis |
-| `/*` | `NotFoundPage` | Custom 404 error screen with safe return navigation |
+| `/` | `HomePage` | Full editorial homepage — Hero, Featured, Story, Categories, Trending, Newsletter |
+| `/shop` | `ShopPage` | Searchable, filterable, sortable product catalogue with pagination |
+| `/collections` | `CollectionsPage` | 6 editorial capsule collections with GSAP stagger and live API images |
+| `/product/:id` | `ProductDetailsPage` | Gallery, specs, ratings, stock badge, quantity selector, related products |
+| `/cart` | `CartPage` | Bag review, promo codes, shipping progress, tax calculation, order summary |
+| `/checkout` | `CheckoutPage` | Demo checkout with contact + shipping form, validation, and order confirmation |
+| `/wishlist` | `WishlistPage` | Saved items with one-click "Add All to Cart" and individual product links |
+| `/login` | `LoginPage` | Email/password sign-in with 1-click demo autofill |
+| `/signup` | `SignupPage` | New account registration with live password strength indicator |
+| `/*` | `NotFoundPage` | Custom 404 with navigation links |
 
 ---
 
@@ -86,46 +169,62 @@ nexora/
 
 ### Local Development
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/Harisolla/Nexora.git
-   cd Nexora
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/Harisolla/Nexora.git
+cd Nexora
 
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+# Install dependencies
+npm install
 
-3. **Start the development server**:
-   ```bash
-   npm run dev
-   ```
-   Open [http://localhost:5173](http://localhost:5173) in your browser.
+# Start development server
+npm run dev
+# → http://localhost:5173
+```
 
-### Build & Production Verification
+### Production Build
 
 ```bash
-# Type check & lint
+# Lint the codebase
 npm run lint
 
-# Compile production bundle
+# Build for production
 npm run build
 
-# Preview production build locally
+# Preview the production build locally
 npm run preview
 ```
 
 ---
 
-## ☁️ Deployment
+## ☁️ Deployment (Vercel)
 
-This project includes a pre-configured `vercel.json` file with Single Page Application (SPA) routing rewrites.
+A `vercel.json` is included with a catch-all SPA rewrite so all client-side routes resolve correctly:
 
-To deploy on [Vercel](https://vercel.com/):
-1. Import the repository into your Vercel Dashboard.
-2. Ensure the Framework Preset is set to **Vite**.
-3. Deploy directly without any additional environment variable configuration.
+```json
+{
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
+```
+
+**Steps to deploy:**
+1. Import the repository at [vercel.com/new](https://vercel.com/new).
+2. Framework Preset: **Vite** (auto-detected).
+3. No environment variables required — data comes from the public DummyJSON API.
+4. Click **Deploy**.
+
+---
+
+## 🔑 Demo Login Credentials
+
+The login page has a **1-click autofill** button, or use manually:
+
+| Field | Value |
+|---|---|
+| Email | `alexandra.vance@nexora.luxury` |
+| Password | `ArchivalPass2026!` |
+
+> Authentication is client-side only — no real backend or database is connected.
 
 ---
 
