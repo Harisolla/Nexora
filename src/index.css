@@ -1,0 +1,1034 @@
+/* ============================================================
+   NEXORA — Global CSS
+   Design System: Oat Milk × Burnt Sienna
+   ============================================================ */
+
+/* Google Fonts — must be before @import "tailwindcss" */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+/* ============================================================
+   TAILWIND V4 — DESIGN TOKENS (CSS Custom Properties)
+   ============================================================ */
+@theme {
+  /* ── Typography ── */
+  --font-sans: 'Manrope', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Manrope', system-ui, sans-serif;
+
+  /* ── Light Mode Palette ── */
+  --color-oat: #F5F0E7;
+  --color-linen: #E2D2BC;
+  --color-cocoa: #352720;
+  --color-taupe: #766354;
+  --color-sienna: #A95032;
+  --color-camel: #C49A76;
+  --color-sand: #D7C4AE;
+  --color-porcelain: #FAF7F1;
+  --color-pale-oat: #EADCCB;
+
+  /* ── Dark Mode Palette ── */
+  --color-espresso: #251B16;
+  --color-dark-cocoa: #352720;
+  --color-warm-sand: #C9B8A7;
+  --color-sienna-light: #D47B53;
+  --color-dark-walnut: #4B382D;
+  --color-roasted: #403027;
+  --color-mahogany: #51392D;
+
+  /* ── Semantic Tokens — Light ── */
+  --color-bg: var(--color-oat);
+  --color-surface: var(--color-linen);
+  --color-text-primary: var(--color-cocoa);
+  --color-text-secondary: var(--color-taupe);
+  --color-accent: var(--color-sienna);
+  --color-accent-secondary: var(--color-camel);
+  --color-border: var(--color-sand);
+  --color-elevated: var(--color-porcelain);
+  --color-highlight: var(--color-pale-oat);
+
+  /* ── Spacing ── */
+  --spacing-section: 6rem;
+  --spacing-section-sm: 4rem;
+
+  /* ── Border Radius ── */
+  --radius-card: 4px;
+  --radius-btn: 3px;
+
+  /* ── Transitions ── */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================================
+   DARK MODE OVERRIDES
+   Using class strategy: <html class="dark">
+   ============================================================ */
+.dark {
+  --color-bg: #251B16;
+  --color-surface: #352720;
+  --color-text-primary: #F5F0E7;
+  --color-text-secondary: #C9B8A7;
+  --color-accent: #D47B53;
+  --color-accent-secondary: #C49A76;
+  --color-border: #4B382D;
+  --color-elevated: #403027;
+  --color-highlight: #51392D;
+}
+
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+/* Subtle archival paper / linen grain texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.038;
+  transform: translateZ(0);
+  will-change: transform;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.dark body::before {
+  opacity: 0.055;
+  mix-blend-mode: screen;
+}
+
+/* Prevent FOUC — theme applied before React hydrates */
+html.theme-loading * {
+  transition: none !important;
+}
+
+/* ============================================================
+   TYPOGRAPHY UTILITIES
+   ============================================================ */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.text-display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.text-display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.text-display-md {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.text-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.text-label-md {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   COLOR UTILITIES
+   ============================================================ */
+.bg-theme-bg { background-color: var(--color-bg); }
+.bg-theme-surface { background-color: var(--color-surface); }
+.bg-theme-elevated { background-color: var(--color-elevated); }
+.bg-theme-highlight { background-color: var(--color-highlight); }
+.bg-theme-accent { background-color: var(--color-accent); }
+
+.text-theme-primary { color: var(--color-text-primary); }
+.text-theme-secondary { color: var(--color-text-secondary); }
+.text-theme-accent { color: var(--color-accent); }
+.text-theme-accent-secondary { color: var(--color-accent-secondary); }
+
+.border-theme { border-color: var(--color-border); }
+
+/* ============================================================
+   COMPONENT PRIMITIVES
+   ============================================================ */
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background-color: var(--color-accent);
+  color: #FAF7F1;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  transition: all 0.25s var(--ease-smooth);
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background-color: #8B3E24;
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background-color: transparent;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  transition: all 0.25s var(--ease-smooth);
+  text-decoration: none;
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: none;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  transition: all 0.2s var(--ease-smooth);
+  text-decoration: none;
+}
+
+.btn-ghost:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-highlight);
+}
+
+/* Icon Buttons */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border: none;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  transition: all 0.2s var(--ease-smooth);
+  position: relative;
+}
+
+.icon-btn:hover {
+  background-color: var(--color-highlight);
+  color: var(--color-accent);
+}
+
+.icon-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Cards */
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth), border-color 0.2s ease;
+  will-change: transform, opacity;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(53, 39, 32, 0.08);
+}
+
+.dark .card:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Card Wishlist Hover Reveal */
+.product-card-wishlist {
+  opacity: 0;
+  transform: translateY(-4px) scale(0.9);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease, background-color 0.2s ease !important;
+}
+
+.card:hover .product-card-wishlist,
+.card:focus-within .product-card-wishlist,
+.product-card-wishlist.is-wishlisted {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+  pointer-events: auto !important;
+}
+
+@media (hover: none) {
+  .product-card-wishlist {
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+}
+
+/* ============================================================
+   SCROLLBAR STYLING
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-taupe);
+}
+
+/* ============================================================
+   SELECTION
+   ============================================================ */
+::selection {
+  background-color: var(--color-accent);
+  color: #FAF7F1;
+}
+
+/* ============================================================
+   FOCUS STYLES
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   SKELETON LOADING ANIMATION
+   ============================================================ */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface) 25%,
+    var(--color-highlight) 50%,
+    var(--color-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-card);
+}
+
+/* ============================================================
+   SCROLL REVEAL DEFAULTS
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.7s var(--ease-smooth), transform 0.7s var(--ease-smooth);
+}
+
+/* ============================================================
+   OVERLAY
+   ============================================================ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(37, 27, 22, 0.6);
+  backdrop-filter: blur(2px);
+  z-index: 40;
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html { scroll-behavior: auto; }
+}
+
+/* ============================================================
+   IMAGE ASPECT RATIOS
+   ============================================================ */
+.aspect-product {
+  aspect-ratio: 3 / 4;
+}
+
+.aspect-product img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.85s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+/* ============================================================
+   HORIZONTAL SCROLL CONTAINER
+   ============================================================ */
+.scroll-x {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-x::-webkit-scrollbar {
+  height: 3px;
+}
+
+/* ============================================================
+   TOAST NOTIFICATIONS
+   ============================================================ */
+.toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+/* ============================================================
+   BADGE
+   ============================================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.35rem;
+  background-color: var(--color-accent);
+  color: #FAF7F1;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border-radius: 999px;
+  line-height: 1;
+}
+
+/* ============================================================
+   SECTION SPACING
+   ============================================================ */
+.section-padding {
+  padding-top: var(--spacing-section);
+  padding-bottom: var(--spacing-section);
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding-top: var(--spacing-section-sm);
+    padding-bottom: var(--spacing-section-sm);
+  }
+}
+
+/* ============================================================
+   DIVIDER
+   ============================================================ */
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+/* ============================================================
+   ANIMATED UNDERLINE LINK
+   ============================================================ */
+.link-underline {
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-accent);
+  transition: width 0.3s var(--ease-smooth);
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* ============================================================
+   NAV LINK ACTIVE STATE
+   ============================================================ */
+.nav-link {
+  position: relative;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background-color: var(--color-accent);
+  transition: width 0.3s var(--ease-smooth);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--color-text-primary);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* ============================================================
+   PRODUCT IMAGE HOVER — Smooth Luxury Zoom
+   ============================================================ */
+.product-image-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+.product-image-wrap img,
+.aspect-product img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.85s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+/* Card-level hover so moving cursor to title/price doesn't abruptly zoom out */
+.card:hover .product-image-wrap img,
+.card:hover .aspect-product img,
+.product-image-wrap:hover img {
+  transform: scale(1.04);
+}
+
+/* ============================================================
+   EXPLORE SECTION (CATEGORIES) HOVER
+   ============================================================ */
+.explore-cat-card {
+  position: relative;
+  height: 280px;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: var(--color-elevated);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.explore-cat-card:hover {
+  border-color: var(--color-accent);
+}
+
+.explore-cat-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.85s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.explore-cat-card:hover img {
+  transform: scale(1.04);
+}
+
+.explore-cat-card .cat-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(37,27,22,0.85) 0%, rgba(37,27,22,0.2) 60%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  transition: background 0.4s ease;
+}
+
+.explore-cat-card:hover .cat-overlay {
+  background: linear-gradient(to top, rgba(37,27,22,0.92) 0%, rgba(37,27,22,0.35) 60%, rgba(37,27,22,0.12) 100%);
+}
+
+.explore-cat-card .cat-arrow {
+  transition: transform 0.35s var(--ease-smooth);
+}
+
+.explore-cat-card:hover .cat-arrow {
+  transform: translateX(6px);
+}
+
+/* ============================================================
+   FILTER PILL
+   ============================================================ */
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.4rem 0.875rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.filter-pill:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.filter-pill.active {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #FAF7F1;
+}
+
+/* ============================================================
+   INPUT STYLES
+   ============================================================ */
+.input-field {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.input-field::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+}
+
+.input-field:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(169, 80, 50, 0.12);
+}
+
+/* ============================================================
+   RATING STARS
+   ============================================================ */
+.stars {
+  color: var(--color-camel);
+  display: flex;
+  gap: 1px;
+}
+
+/* ============================================================
+   PRICE DISPLAY
+   ============================================================ */
+.price {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  font-feature-settings: 'tnum';
+  letter-spacing: -0.01em;
+}
+
+.price-original {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  text-decoration: line-through;
+}
+
+/* ============================================================
+   DISCOUNT BADGE
+   ============================================================ */
+.discount-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  background-color: var(--color-accent);
+  color: #FAF7F1;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   QUANTITY CONTROL
+   ============================================================ */
+.qty-control {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  overflow: hidden;
+}
+
+.qty-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  transition: all 0.2s ease;
+}
+
+.qty-btn:hover {
+  background-color: var(--color-highlight);
+  color: var(--color-accent);
+}
+
+.qty-value {
+  width: 2.5rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  border-left: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+  padding: 0.4rem 0;
+}
+
+/* ============================================================
+   SECTION LABEL
+   ============================================================ */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+}
+
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5px;
+  background-color: var(--color-accent);
+}
+
+/* ============================================================
+   CATEGORY CARD OVERLAY
+   ============================================================ */
+.cat-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(37, 27, 22, 0.75) 0%,
+    rgba(37, 27, 22, 0.1) 60%,
+    transparent 100%
+  );
+  transition: background 0.3s ease;
+}
+
+/* ============================================================
+   DRAWER
+   ============================================================ */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(420px, 95vw);
+  background-color: var(--color-bg);
+  border-left: 1px solid var(--color-border);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ============================================================
+   HERO CLIP PATH (for story section reveal)
+   ============================================================ */
+.clip-reveal {
+  clip-path: inset(0 100% 0 0);
+}
+
+.clip-revealed {
+  clip-path: inset(0 0% 0 0);
+  transition: clip-path 1s var(--ease-smooth);
+}
+
+/* ============================================================
+   CART PAGE RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .cart-grid-layout {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .cart-item-card {
+    grid-template-columns: 80px minmax(0, 1fr) !important;
+  }
+  .cart-item-card > div:last-child {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: row !important;
+    justifyContent: space-between !important;
+    align-items: center !important;
+    border-top: 1px dashed var(--color-border);
+    padding-top: 0.75rem;
+    margin-top: 0.25rem;
+  }
+}
+
+/* ============================================================
+   SEARCH OVERLAY & INPUT ENHANCEMENTS
+   ============================================================ */
+.search-input-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: 10px;
+  padding: 0.55rem 0.85rem;
+  transition: border-color 0.22s var(--ease-smooth),
+              box-shadow 0.22s var(--ease-smooth),
+              background-color 0.22s var(--ease-smooth);
+}
+
+.search-input-box:focus-within,
+.search-input-box.is-focused {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(169, 80, 50, 0.16), 0 8px 24px -4px rgba(0, 0, 0, 0.08);
+  background-color: var(--color-surface);
+}
+
+.search-native-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 0.35rem 0;
+  font-size: 1rem;
+  font-family: var(--font-sans);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+.search-native-input::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+}
+
+/* Suppress native WebKit search clear and search buttons */
+.search-native-input::-webkit-search-decoration,
+.search-native-input::-webkit-search-cancel-button,
+.search-native-input::-webkit-search-results-button,
+.search-native-input::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  display: none;
+}
+
+.search-clear-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: var(--color-highlight);
+  color: var(--color-text-secondary);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.search-clear-pill:hover {
+  background-color: var(--color-border);
+  color: var(--color-text-primary);
+  transform: scale(1.08);
+}
+
+.search-clear-pill:active {
+  transform: scale(0.95);
+}
+
+.search-kbd-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem 0.45rem;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--color-text-secondary);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  pointer-events: none;
+  line-height: 1;
+}
+
+.search-close-label {
+  display: inline;
+}
+
+.search-close-x {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .search-kbd-badge-esc {
+    display: none !important;
+  }
+  .search-close-label {
+    display: none !important;
+  }
+  .search-close-x {
+    display: inline-flex !important;
+  }
+}
+
+@media (min-width: 601px) {
+  .search-close-x {
+    display: none !important;
+  }
+}
+
+.search-tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s var(--ease-smooth);
+}
+
+.search-tag-chip:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background-color: var(--color-highlight);
+  transform: translateY(-1px);
+}
+
+
+
+
+
